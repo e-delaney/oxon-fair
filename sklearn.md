@@ -1,4 +1,4 @@
-# Using Sklearn and OxonFair
+# Using Sklearn and AnonFair
 
 Here we show a simple example of enforcing fairness on a random forest classifier.
 

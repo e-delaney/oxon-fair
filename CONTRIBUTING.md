@@ -18,7 +18,7 @@ Please try to include as much information as you can. Details like these are inc
 * Any modifications you've made relevant to the bug
 * Anything unusual about your environment or deployment
 
-Ideally, you can install OxonFair and its dependencies in a fresh virtualenv to reproduce the bug.
+Ideally, you can install AnonFair and its dependencies in a fresh virtualenv to reproduce the bug.
 
 ## Contributing via Pull Requests
 Code contributions via pull requests are much appreciated. Before sending us a pull request, please ensure that:
