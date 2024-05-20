@@ -31,8 +31,8 @@ from transformers import BertModel, BertTokenizer
 from torch import nn
 import hyperparse 
 usermode, usermode_str = hyperparse.parse("usermode")
-if "oofair" in usermode:
-    usermode["rmna"] = usermode["oofair"]
+if "anonfair" in usermode:
+    usermode["rmna"] = usermode["anonfair"]
 if "mfair" in usermode:
     usermode["rmna"] = usermode["mfair"]
 
@@ -213,7 +213,7 @@ def build_bert(lang, odir, params=None):
         if "smalldbg" in usermode:
             for i in range(len(data_df)):
                 data_df[i] = data_df[i][:int(0.1 * len( data_df[i]))]
-        if ("rmna" in usermode or "oofair" in usermode) and "data" not in usermode:
+        if ("rmna" in usermode or "anonfair" in usermode) and "data" not in usermode:
             print("Size before remove NA: ", [len(df) for df in data_df])
             data_df = [df[df[usermode["rmna"]].notnull()].copy() for df in data_df]
             [df.reset_index(drop=True, inplace=True) for df in data_df]
@@ -298,7 +298,7 @@ def build_bert(lang, odir, params=None):
     test_inputs = torch.tensor(data_df[2].text)
     test_labels = torch.tensor(data_df[2].label)
     test_masks = torch.tensor(data_df[2].masks)
-    if ("oofair" in usermode and "dbgm" not in usermode) or "enforce" in usermode or "mfair" in usermode:
+    if ("anonfair" in usermode and "dbgm" not in usermode) or "enforce" in usermode or "mfair" in usermode:
         print(data_df[0])
         protected_train_labels = torch.tensor(data_df[0][usermode["rmna"]].values)
         protected_valid_labels = torch.tensor(data_df[1][usermode["rmna"]].values)
@@ -306,7 +306,7 @@ def build_bert(lang, odir, params=None):
 
     batch_size = params['batch_size']
 
-    if ("oofair" in usermode and "dbgm" not in usermode) or "enforce" in usermode or "mfair" in usermode:
+    if ("anonfair" in usermode and "dbgm" not in usermode) or "enforce" in usermode or "mfair" in usermode:
         train_data = TensorDataset(train_inputs, train_masks, train_labels, protected_train_labels)
         train_sampler = RandomSampler(train_data)
         train_dataloader = DataLoader(train_data, sampler=train_sampler, batch_size=batch_size)
@@ -340,7 +340,7 @@ def build_bert(lang, odir, params=None):
     # load the pretrained model
     print('Loading Pretrained Model...')
     if lang == 'English':
-        if "oofair" in usermode or "mfair" in usermode:
+        if "anonfair" in usermode or "mfair" in usermode:
             model = BertForMultiTask('bert-base-uncased', num_labels=2, num_labels_secondary=len(usermode["rmna"]) if "mfair" in usermode else 1)
             if "dbgm" in usermode:
                 model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2)
@@ -356,7 +356,7 @@ def build_bert(lang, odir, params=None):
         model = BertForSequenceClassification.from_pretrained(
         'bert-base-chinese', num_labels=2)
     else: # for Spanish, Italian, Portuguese and Polish
-        if "oofair" in usermode:
+        if "anonfair" in usermode:
             model = BertForMultiTask('bert-base-multilingual-uncased', num_labels=2, num_labels_secondary=1)
             if "dbgm" in usermode:
                 model = BertForSequenceClassification.from_pretrained('bert-base-multilingual-uncased', num_labels=2)
@@ -399,7 +399,7 @@ def build_bert(lang, odir, params=None):
             # Add batch to GPU
             batch = tuple(t.to(device) for t in batch)
             optimizer.zero_grad()
-            if "oofair" in usermode or "mfair" in usermode:
+            if "anonfair" in usermode or "mfair" in usermode:
                 b_input_ids, b_input_mask, b_labels, b_protected_labels = batch if len(batch) == 4 else batch + (None,)
                 if "dbgm" in usermode:
                     outputs = model(b_input_ids, attention_mask=b_input_mask, labels=b_labels)
@@ -464,7 +464,7 @@ def build_bert(lang, odir, params=None):
             # Add batch to GPU
             batch = tuple(t.to(device) for t in batch)
             # Unpack the inputs from our dataloader
-            if "oofair" in usermode or "mfair" in usermode: 
+            if "anonfair" in usermode or "mfair" in usermode: 
                 b_input_ids, b_input_mask, b_labels, b_protected_labels = batch
                 with torch.no_grad():
                     outputs = model(b_input_ids, attention_mask=b_input_mask)
@@ -513,7 +513,7 @@ def build_bert(lang, odir, params=None):
             # test if valid gets better results
             for batch in test_dataloader:
                 batch = tuple(t.to(device) for t in batch)
-                if "oofair" in usermode or "mfair" in usermode:
+                if "anonfair" in usermode or "mfair" in usermode:
                     b_input_ids, b_input_mask, b_labels, b_protected_labels = batch
                     with torch.no_grad():
                         outputs = model(b_input_ids,  attention_mask=b_input_mask)
@@ -542,7 +542,7 @@ def build_bert(lang, odir, params=None):
                 y_probs.extend([item[1] for item in probs])
             # save the predicted results
             test_df = pd.read_csv(os.path.join(split_dir, 'test.tsv'), sep='\t', na_values='x')
-            if "rmna" in usermode or "oofair" in usermode:
+            if "rmna" in usermode or "anonfair" in usermode:
                 valid_df = pd.read_csv(os.path.join(split_dir, 'valid.tsv'), sep='\t', na_values='x')
                 valid_df = valid_df[valid_df[usermode["rmna"]].notnull()].copy()
                 test_df = test_df[test_df[usermode["rmna"]].notnull()].copy()
@@ -562,13 +562,13 @@ def build_bert(lang, odir, params=None):
                 elif "logit1" in usermode:
                     return y_logits[:, -1]
                 return y_logits[:, -1]
-            if "oofair" in usermode or "mfair" in usermode:
+            if "anonfair" in usermode or "mfair" in usermode:
                 # valid
                 valid_df['pred'] = y_valid_preds
                 valid_df['protected_probs'] = y_valid_protected_probs
                 valid_df['logits'] = y_valid_logits
 
-                # Save oxonfair results                    
+                # Save results                    
 
                 if "mfair" in usermode:
                     outputs_val = np.hstack([get_logits(np.stack(y_valid_logits))[:, None], np.stack(y_valid_protected_probs)])
