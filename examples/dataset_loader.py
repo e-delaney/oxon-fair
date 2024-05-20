@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from oxonfair import build_data_dict
+from anonfair import build_data_dict
 from sklearn.preprocessing import LabelEncoder
 
 

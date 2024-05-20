@@ -13,7 +13,7 @@ It is a modified version of [autogluon.fair](https://github.com/autogluon/autogl
 To install from source.
  1.  (recomended) Install autogluon (see <https://auto.gluon.ai/stable/index.html#installation>)
  2.  (Minimal Alternative) Install scikit learn (see <https://scikit-learn.org/stable/install.html>)
- 3. Download the source of oxonfair and in the source directory run:
+ 3. Download the source of anonfair and in the source directory run:
     pip install -e .
 
 Now run the [Example Notebook](examples/quickstart_autogluon.ipynb) or try some of the example below.
@@ -26,8 +26,8 @@ For pytorch see the [Example Notebook](examples/quickstart_DeepFairPredictor_com
     # Load and train an autogluon baseline classifier
 
     from autogluon.tabular import TabularDataset, TabularPredictor
-    from oxonfair import FairPredictor
-    from oxonfair.utils import group_metrics as gm
+    from anonfair import FairPredictor
+    from anonfair.utils import group_metrics as gm
     train_data = TabularDataset('https://autogluon.s3.amazonaws.com/datasets/Inc/train.csv')
     test_data = TabularDataset('https://autogluon.s3.amazonaws.com/datasets/Inc/test.csv')
     predictor = TabularPredictor(label='class').fit(train_data=train_data)
@@ -251,8 +251,8 @@ We load and preprocess the COMPAS dataset, splitting it into three roughly equal
 
     import pandas as pd
     import   numpy   as   np
-    from oxonfair import FairPredictor, inferred_attribute_builder
-    from oxonfair.utils import group_metrics as gm
+    from anonfair import FairPredictor, inferred_attribute_builder
+    from anonfair.utils import group_metrics as gm
     all_data = pd.read_csv('https://github.com/propublica/compas-analysis/raw/master/compas-scores-two-years.csv')
     condensed_data=all_data[['sex','race','age', 'juv_fel_count', 'juv_misd_count', 'juv_other_count', 'priors_count', 'age_cat', 'c_charge_degree','two_year_recid']].copy()
     condensed_data.replace({'Caucasian':'Other', 'Hispanic':'Other', 'Native American':'Other', 'Asian':'Other'},inplace=True)
@@ -384,7 +384,7 @@ The file `./examples/fair/sample_use.ipynb` has an example on the adult dataset 
 
 The remainder of the document lists the standard measures provided by the group_metrics library, which is imported as:
 
-    from oxonfair.utils import group_metrics as gm
+    from anonfair.utils import group_metrics as gm
 
 #### Basic Structure
 

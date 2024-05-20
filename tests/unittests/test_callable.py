@@ -1,6 +1,6 @@
 import numpy as np
-import oxonfair
-from oxonfair.utils import group_metrics as gm
+import anonfair
+from anonfair.utils import group_metrics as gm
 
 
 val = np.random.randn(1000, 2)  #
@@ -25,7 +25,7 @@ test_dict = {"data": test, "target": test_target, "groups": test_groups}
 
 
 def test_runs(use_fast=True):
-    fpred = oxonfair.FairPredictor(sigmoid, val_dict, val_groups, inferred_groups=square_align,
+    fpred = anonfair.FairPredictor(sigmoid, val_dict, val_groups, inferred_groups=square_align,
                                    use_fast=use_fast)
     fpred.fit(gm.accuracy, gm.equal_opportunity, 0.002)
     tmp = np.asarray(fpred.evaluate(metrics={'eo': gm.equal_opportunity}))[0, 1]
@@ -49,7 +49,7 @@ def test_runs_hybrid():
 
 
 def test_fairdeep(use_fast=True, use_true_groups=False):
-    fpred = oxonfair.DeepFairPredictor(val_target, val, val_groups, use_fast=use_fast, use_actual_groups=use_true_groups)
+    fpred = anonfair.DeepFairPredictor(val_target, val, val_groups, use_fast=use_fast, use_actual_groups=use_true_groups)
     fpred.fit(gm.accuracy, gm.equal_opportunity, 0.002)
     tmp = np.asarray(fpred.evaluate(metrics={'eo': gm.equal_opportunity}))[0, 1]
     assert tmp < 0.002

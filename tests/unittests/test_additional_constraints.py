@@ -3,8 +3,8 @@
 import numpy as np
 import pandas as pd
 import sklearn.linear_model
-import oxonfair as fair
-from oxonfair.utils import group_metrics as gm
+import anonfair as fair
+from anonfair.utils import group_metrics as gm
 
 classifier_type = sklearn.linear_model.LogisticRegression
 

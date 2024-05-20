@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
-import oxonfair as fair
-from oxonfair.utils import group_metrics as gm
-from oxonfair.utils import conditional_group_metrics as cgm
+import anonfair as fair
+from anonfair.utils import group_metrics as gm
+from anonfair.utils import conditional_group_metrics as cgm
 
 try:
     from autogluon.tabular import TabularDataset, TabularPredictor

@@ -2,9 +2,9 @@
 
 import pandas as pd
 import sklearn.tree
-import oxonfair as fair
-from oxonfair import FairPredictor
-from oxonfair.utils import group_metrics as gm
+import anonfair as fair
+from anonfair import FairPredictor
+from anonfair.utils import group_metrics as gm
 
 PLT_EXISTS = True
 try:

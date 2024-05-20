@@ -1,6 +1,6 @@
 import numpy as np
-from oxonfair.utils import group_metrics as gm
-from oxonfair.utils import performance as perf
+from anonfair.utils import group_metrics as gm
+from anonfair.utils import performance as perf
 
 
 def test_metrics():

@@ -2,7 +2,7 @@ import os
 
 from setuptools import setup
 
-FAIR = "oxonfair"
+FAIR = "anonfair"
 
 PYTHON_REQUIRES = ">=3.8"
 

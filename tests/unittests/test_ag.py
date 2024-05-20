@@ -10,9 +10,9 @@ try:
 except ModuleNotFoundError:
     print('Autogluon not installed')
     
-import oxonfair as fair
-from oxonfair import FairPredictor
-from oxonfair.utils import group_metrics as gm
+import anonfair as fair
+from anonfair import FairPredictor
+from anonfair.utils import group_metrics as gm
 
 
 def test_base_functionality():

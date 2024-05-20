@@ -13,8 +13,8 @@ Step 1 requires considerably more preamble when using sklearn.
     ### load libraries and download the adult dataset
 
     from sklearn.ensemble import RandomForestClassifier
-    import oxonfair as fair
-    from oxonfair import group_metrics as gm
+    import anonfair as fair
+    from anonfair import group_metrics as gm
     import pandas as pd
     train_data = pd.read_csv('https://autogluon.s3.amazonaws.com/datasets/Inc/train.csv')
     test_data = pd.read_csv('https://autogluon.s3.amazonaws.com/datasets/Inc/test.csv')
