@@ -6,7 +6,6 @@ For low capacity models (e.g. linear regression, and decision-trees of limited d
 
 We support a range of complex classifiers including [pytorch](https://pytorch.org/),[scikit learn](https://scikit-learn.org/stable/), and ensembles provided by [autogluon](https://auto.gluon.ai/stable/index.html),.
 
-It is a modified version of [autogluon.fair](https://github.com/autogluon/autogluon-fair) and actively maintained.
 
 ### Source install
 
