@@ -49,7 +49,6 @@ def default_setup_args(*, version):
     setup_args = dict(
         name=name,
         version=version,
-        author="Governance of Emerging Technologies Programme (Oxford Internet Insitute)",
         url="https://github.com/AnonymizedforReviewSubmission/AnonymizedforReviewSubmission/",
         description="AutoML Framework for evaluating and enforcing ML model fairness",
         long_description=long_description,
